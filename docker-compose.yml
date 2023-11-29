@@ -1,0 +1,18 @@
+version: '3'
+services:
+
+  user-db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: eb_db
+    ports:
+      - 33061:3306
+
+  user-bounded-context-service:
+    restart: on-failure
+    image: user-service:latest
+    depends_on:
+      - user-db
+    ports:
+      - 8080:8080
